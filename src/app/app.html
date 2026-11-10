@@ -1,0 +1,166 @@
+<div class="site-shell">
+  <header class="site-header" [class.menu-open]="menuOpen()">
+    <a class="brand" href="#inicio" aria-label="GM Music, inicio">
+      <img src="/logo-gm-music.png" alt="GM Music" />
+    </a>
+
+    <button class="menu-toggle" type="button" (click)="toggleMenu()" [attr.aria-expanded]="menuOpen()" aria-label="Abrir menú">
+      <span></span><span></span>
+    </button>
+
+    <nav class="main-nav" aria-label="Navegación principal">
+      <a href="#eventos" (click)="closeMenu()">{{ copy().navEvents }}</a>
+      <a href="#experiencias" (click)="closeMenu()">{{ copy().navExperiences }}</a>
+      <a href="#archivo" (click)="closeMenu()">{{ copy().navArchive }}</a>
+      <a href="#contacto" (click)="closeMenu()">{{ copy().navContact }}</a>
+    </nav>
+
+    <a class="header-social" href="https://www.facebook.com/share/1E3cZypEcX/" target="_blank" rel="noopener">{{ copy().follow }} <span>↗</span></a>
+    <button class="language-switch" type="button" (click)="toggleLanguage()" [attr.aria-label]="language() === 'es' ? 'Switch to English' : 'Cambiar a español'">{{ language() === 'es' ? 'EN' : 'ES' }} <span>↕</span></button>
+  </header>
+
+  <main>
+    <section class="hero" id="inicio">
+      <div class="hero-glow hero-glow-one"></div>
+      <div class="hero-glow hero-glow-two"></div>
+      <div class="hero-grid"></div>
+      <div class="hero-copy">
+        <p class="eyebrow"><span></span> {{ copy().heroEyebrow }}</p>
+        <h1>{{ copy().heroTitle }}<br /><em>{{ copy().heroAccent }}</em>{{ language() === 'es' ? ' contigo.' : ' with you.' }}</h1>
+        <p class="hero-description">{{ copy().heroDescription }}</p>
+        <div class="hero-actions">
+          <a class="button button-primary" href="#eventos">{{ copy().heroEvents }} <span>↗</span></a>
+          <a class="button button-ghost" href="#experiencias">{{ copy().heroAbout }} <span>↓</span></a>
+        </div>
+      </div>
+      <div class="social-cloud" aria-label="GM Music social links">
+        <div class="cloud-ring cloud-ring-one"></div>
+        <div class="cloud-ring cloud-ring-two"></div>
+        <div class="social-core"><span>GM</span><small>SOCIAL CLUB</small></div>
+        <a class="social-bubble bubble-facebook" href="https://www.facebook.com/share/1E3cZypEcX/" target="_blank" rel="noopener" aria-label="Facebook"><b>f</b><small>Facebook</small></a>
+        <a class="social-bubble bubble-instagram" href="#contacto" aria-label="Instagram"><b>◎</b><small>Instagram</small></a>
+        <a class="social-bubble bubble-whatsapp" href="#contacto" aria-label="WhatsApp"><b>◌</b><small>WhatsApp</small></a>
+      </div>
+      <div class="hero-bottom-line">
+        <span>Eventos · Producción · Experiencias</span>
+        <span>{{ copy().heroScroll }} <b>↓</b></span>
+      </div>
+    </section>
+
+    <section class="intro-section section-wrap" id="experiencias">
+      <div class="section-kicker">{{ copy().introKicker }}</div>
+      <div class="intro-content">
+        <h2>{{ copy().introTitle }}<br /><em>{{ copy().introAccent }}</em></h2>
+        <div class="intro-text">
+          <p>{{ copy().introDescription }}</p>
+          <a class="text-link" href="#contacto">{{ copy().introLink }} <span>↗</span></a>
+        </div>
+      </div>
+      <div class="stat-row">
+        @for (stat of copy().stats; track $index; let index = $index) {
+          <div><strong>{{ index === 1 ? '∞' : index === 2 ? '24/7' : '01' }}</strong><span>{{ stat.split('|')[0] }}<br />{{ stat.split('|')[1] }}</span></div>
+        }
+      </div>
+    </section>
+
+    <section class="events-section section-wrap" id="eventos">
+      <div class="section-heading">
+        <div>
+          <div class="section-kicker">{{ copy().agendaKicker }}</div>
+          <h2>{{ copy().agendaTitle }} <em>{{ copy().agendaAccent }}</em></h2>
+        </div>
+          <div class="filter-tabs" role="tablist" [attr.aria-label]="language() === 'es' ? 'Filtrar eventos' : 'Filter events'">
+          <button type="button" [class.active]="eventFilter() === 'upcoming'" (click)="setFilter('upcoming')">{{ copy().upcomingFilter }}</button>
+          <button type="button" [class.active]="eventFilter() === 'past'" (click)="setFilter('past')">{{ copy().pastFilter }}</button>
+        </div>
+      </div>
+
+      @if (eventFilter() === 'upcoming') {
+        <div class="event-grid">
+          @for (event of upcomingEvents; track event.title) {
+            <article class="event-card" [class.featured]="$first">
+              <div class="event-image" [style.background-image]="'linear-gradient(135deg, rgba(201,149,50,.34), rgba(17,16,15,.84)), url(' + event.image + ')'">
+                <span class="event-status">{{ copy().upcomingTag }}</span>
+                <span class="event-number">0{{ $index + 1 }}</span>
+              </div>
+              <div class="event-info">
+                <div class="event-date"><strong>{{ event.day }}</strong><span>{{ event.month }}<br />{{ event.year }}</span></div>
+                <div class="event-copy"><h3>{{ event.title }}</h3><p>{{ language() === 'es' ? event.location : event.locationEn }}</p></div>
+                <a class="round-arrow" href="#contacto" [attr.aria-label]="copy().infoAria + ' ' + event.title">↗</a>
+              </div>
+            </article>
+          }
+        </div>
+      } @else {
+        <div class="event-grid">
+          @for (event of pastEvents; track event.title) {
+            <article class="event-card">
+              <div class="event-image" [style.background-image]="'linear-gradient(135deg, rgba(201,149,50,.34), rgba(17,16,15,.84)), url(' + event.image + ')'">
+                <span class="event-status past-status">{{ copy().pastTag }}</span>
+                <span class="event-number">0{{ $index + 1 }}</span>
+              </div>
+              <div class="event-info">
+                <div class="event-date"><strong>{{ event.day }}</strong><span>{{ event.month }}<br />{{ event.year }}</span></div>
+                <div class="event-copy"><h3>{{ event.title }}</h3><p>{{ language() === 'es' ? event.location : event.locationEn }}</p></div>
+                <a class="round-arrow" href="#archivo" [attr.aria-label]="'Ver archivo de ' + event.title">↗</a>
+              </div>
+            </article>
+          }
+        </div>
+      }
+    </section>
+
+    <section class="archive-section" id="archivo">
+      <div class="section-wrap archive-inner">
+        <div class="archive-copy">
+          <div class="section-kicker">{{ copy().archiveKicker }}</div>
+          <h2>{{ copy().archiveTitle }}<br /><em>{{ copy().archiveAccent }}</em></h2>
+          <p>{{ copy().archiveDescription }}</p>
+          <a class="button button-light" href="#contacto">{{ copy().gallery }} <span>↗</span></a>
+        </div>
+        <div class="archive-collage" aria-label="Galería de eventos pasados">
+          <div class="collage-image collage-main" [style.background-image]="'linear-gradient(135deg, rgba(17,16,15,.22), rgba(201,149,50,.3)), url(' + pastEvents[0].image + ')'" aria-hidden="true"></div>
+          <div class="collage-image collage-top" [style.background-image]="'linear-gradient(135deg, rgba(17,16,15,.22), rgba(201,149,50,.3)), url(' + pastEvents[1].image + ')'" aria-hidden="true"></div>
+          <div class="collage-image collage-bottom" [style.background-image]="'linear-gradient(135deg, rgba(17,16,15,.22), rgba(201,149,50,.3)), url(' + pastEvents[2].image + ')'" aria-hidden="true"></div>
+          <span class="collage-note">GM / MEMORIES</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="contact-section section-wrap" id="contacto">
+      <div class="section-kicker">{{ copy().contactKicker }}</div>
+      <div class="contact-content">
+        <div>
+          <h2>{{ copy().contactTitle }}<br /><em>{{ copy().contactAccent }}</em></h2>
+          <p>{{ copy().contactDescription }}</p>
+        </div>
+        <div class="contact-actions">
+          <a class="contact-link" href="https://www.facebook.com/share/1E3cZypEcX/" target="_blank" rel="noopener"><span>f</span> Facebook <b>↗</b></a>
+          <a class="contact-link" href="#contacto"><span>◎</span> Instagram <small>{{ copy().comingSoon }}</small></a>
+          <a class="contact-link" href="#contacto"><span>◌</span> WhatsApp <small>{{ copy().comingSoon }}</small></a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <a class="brand footer-brand" href="#inicio"><img src="/logo-gm-music.png" alt="GM Music" /></a>
+    <span>© {{ currentYear }} GM Music</span>
+    <span>{{ copy().footerLine }}</span>
+  </footer>
+
+  @if (languagePromptOpen()) {
+    <div class="language-backdrop">
+      <div class="language-modal" role="dialog" aria-modal="true" aria-labelledby="language-title">
+        <div class="language-logo">GM</div>
+        <p class="language-overline">WELCOME / BIENVENIDO</p>
+        <h2 id="language-title">Elige tu idioma<br /><em>Choose your language</em></h2>
+        <p class="language-description">Selecciona cómo quieres explorar la experiencia GM Music.</p>
+        <div class="language-options">
+          <button type="button" (click)="chooseLanguage('es')"><span>ES</span> Español <b>↗</b></button>
+          <button type="button" (click)="chooseLanguage('en')"><span>EN</span> English <b>↗</b></button>
+        </div>
+      </div>
+    </div>
+  }
+</div>
