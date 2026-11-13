@@ -6,6 +6,8 @@
     "start": "ng serve",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
+    "media:prepare": "node scripts/prepare-media.mjs",
+    "media:verify": "node scripts/verify-media.mjs",
     "test": "ng test"
   },
   "private": true,

@@ -53,6 +53,13 @@
           },
           "configurations": {
             "production": {
+              "assets": [
+                {
+                  "glob": "**/*",
+                  "input": "public",
+                  "ignore": ["imagenes/**", "videos/**", "Animacion/**", "logo-gm-music.png"]
+                }
+              ],
               "budgets": [
                 {
                   "type": "initial",

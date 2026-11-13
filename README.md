@@ -1,4 +1,25 @@
-# GmMusic
+# GM Music
+
+Página principal con archivo visual de Alliant Energy: 50 fotografías clasificadas, video del evento y animación del logo. Interfaz en español e inglés, galería con filtros y visor con navegación por teclado.
+
+## Inicio local en Windows
+
+```powershell
+npm.cmd start -- --host 127.0.0.1 --port 4200
+```
+
+Abre http://127.0.0.1:4200/. El servidor actualiza la página al guardar cambios.
+
+```powershell
+npm.cmd run build
+npm.cmd run media:verify -- http://127.0.0.1:4200
+```
+
+Consulta [el inventario y la clasificación de medios](docs/media-library.md) para ver las categorías, las rutas y el proceso de optimización. Los originales permanecen en `public/imagenes`, `public/videos` y `public/Animacion`; la página usa las copias optimizadas de `public/media`. La compilación de producción omite los originales para mantener ligero el sitio.
+
+Los originales se conservan localmente y están excluidos de Git. Las versiones optimizadas se incluyen en el repositorio y permiten ejecutar y compilar el sitio después de clonarlo. `media:verify` requiere FFprobe instalado y verifica también los originales cuando están presentes; `media:prepare` requiere FFmpeg, FFprobe y todos los originales en sus rutas indicadas.
+
+## Angular CLI
 
 This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 22.2.5.
 

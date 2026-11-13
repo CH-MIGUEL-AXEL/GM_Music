@@ -2,6 +2,11 @@
 
 /local
 
+# High-resolution source media stays local; optimized website assets are versioned.
+/public/imagenes/
+/public/videos/
+/public/Animacion/
+
 # Compiled output
 /dist
 /tmp

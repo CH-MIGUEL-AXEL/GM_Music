@@ -1,166 +1,418 @@
 <div class="site-shell">
+  <a class="skip-link" href="#contenido">{{ copy().skip }}</a>
   <header class="site-header" [class.menu-open]="menuOpen()">
-    <a class="brand" href="#inicio" aria-label="GM Music, inicio">
-      <img src="/logo-gm-music.png" alt="GM Music" />
-    </a>
-
-    <button class="menu-toggle" type="button" (click)="toggleMenu()" [attr.aria-expanded]="menuOpen()" aria-label="Abrir menú">
+    <a class="brand" href="#inicio" aria-label="GM Music"
+      ><img src="/media/brand/logo.webp" alt="GM Music" width="96" height="96"
+    /></a>
+    <button
+      class="menu-toggle"
+      type="button"
+      (click)="toggleMenu()"
+      [attr.aria-expanded]="menuOpen()"
+      aria-controls="main-nav"
+      [attr.aria-label]="menuOpen() ? copy().menuClose : copy().menuOpen"
+    >
       <span></span><span></span>
     </button>
-
-    <nav class="main-nav" aria-label="Navegación principal">
-      <a href="#eventos" (click)="closeMenu()">{{ copy().navEvents }}</a>
+    <nav class="main-nav" id="main-nav" [attr.aria-label]="copy().navigation">
       <a href="#experiencias" (click)="closeMenu()">{{ copy().navExperiences }}</a>
+      <a href="#eventos" (click)="closeMenu()">{{ copy().navEvents }}</a>
       <a href="#archivo" (click)="closeMenu()">{{ copy().navArchive }}</a>
       <a href="#contacto" (click)="closeMenu()">{{ copy().navContact }}</a>
     </nav>
-
-    <a class="header-social" href="https://www.facebook.com/share/1E3cZypEcX/" target="_blank" rel="noopener">{{ copy().follow }} <span>↗</span></a>
-    <button class="language-switch" type="button" (click)="toggleLanguage()" [attr.aria-label]="language() === 'es' ? 'Switch to English' : 'Cambiar a español'">{{ language() === 'es' ? 'EN' : 'ES' }} <span>↕</span></button>
+    <a
+      class="header-social"
+      href="https://www.facebook.com/share/1E3cZypEcX/"
+      target="_blank"
+      rel="noopener noreferrer"
+      >{{ copy().follow }} <span aria-hidden="true">↗</span></a
+    >
+    <button
+      class="language-switch"
+      type="button"
+      (click)="toggleLanguage()"
+      [attr.aria-label]="language() === 'es' ? 'Switch to English' : 'Cambiar a español'"
+    >
+      {{ language() === 'es' ? 'EN' : 'ES' }} <span aria-hidden="true">↕</span>
+    </button>
   </header>
-
-  <main>
-    <section class="hero" id="inicio">
-      <div class="hero-glow hero-glow-one"></div>
-      <div class="hero-glow hero-glow-two"></div>
-      <div class="hero-grid"></div>
+  <main id="contenido">
+    <section class="hero" id="inicio" aria-labelledby="hero-title">
+      <img
+        class="hero-image"
+        [src]="heroPhoto.src"
+        [alt]="caption(heroPhoto)"
+        [width]="heroPhoto.width"
+        [height]="heroPhoto.height"
+        fetchpriority="high"
+      />
+      <div class="hero-shade"></div>
       <div class="hero-copy">
-        <p class="eyebrow"><span></span> {{ copy().heroEyebrow }}</p>
-        <h1>{{ copy().heroTitle }}<br /><em>{{ copy().heroAccent }}</em>{{ language() === 'es' ? ' contigo.' : ' with you.' }}</h1>
+        <p class="eyebrow"><span></span>{{ copy().heroEyebrow }}</p>
+        <h1 id="hero-title">
+          {{ copy().heroTitle }}<br /><em>{{ copy().heroAccent }}</em>
+        </h1>
         <p class="hero-description">{{ copy().heroDescription }}</p>
         <div class="hero-actions">
-          <a class="button button-primary" href="#eventos">{{ copy().heroEvents }} <span>↗</span></a>
-          <a class="button button-ghost" href="#experiencias">{{ copy().heroAbout }} <span>↓</span></a>
+          <a class="button button-primary" href="#archivo"
+            >{{ copy().heroGallery }} <span aria-hidden="true">↗</span></a
+          ><button class="button button-ghost" type="button" (click)="openFilm('recap')">
+            <span class="small-play" aria-hidden="true">▶</span>{{ copy().heroFilm }}
+          </button>
         </div>
       </div>
-      <div class="social-cloud" aria-label="GM Music social links">
-        <div class="cloud-ring cloud-ring-one"></div>
-        <div class="cloud-ring cloud-ring-two"></div>
-        <div class="social-core"><span>GM</span><small>SOCIAL CLUB</small></div>
-        <a class="social-bubble bubble-facebook" href="https://www.facebook.com/share/1E3cZypEcX/" target="_blank" rel="noopener" aria-label="Facebook"><b>f</b><small>Facebook</small></a>
-        <a class="social-bubble bubble-instagram" href="#contacto" aria-label="Instagram"><b>◎</b><small>Instagram</small></a>
-        <a class="social-bubble bubble-whatsapp" href="#contacto" aria-label="WhatsApp"><b>◌</b><small>WhatsApp</small></a>
-      </div>
+      <button
+        class="hero-film"
+        type="button"
+        (click)="openFilm('logo')"
+        [attr.aria-label]="copy().identityPlay"
+      >
+        <img [src]="videos.logo.poster" alt="" width="400" height="225" /><span
+          class="hero-film-bottom"
+          ><span
+            >GM / IN MOTION<small>{{ copy().identityPlay }} · 00:25</small></span
+          ><span class="mini-play" aria-hidden="true">▶</span></span
+        >
+      </button>
       <div class="hero-bottom-line">
-        <span>Eventos · Producción · Experiencias</span>
-        <span>{{ copy().heroScroll }} <b>↓</b></span>
+        <span>{{ copy().heroLocation }}</span
+        ><a href="#experiencias">{{ copy().heroScroll }} <span aria-hidden="true">↓</span></a>
       </div>
+      <span class="hero-side-label" aria-hidden="true">GM MUSIC / LIVE EXPERIENCES</span>
     </section>
-
-    <section class="intro-section section-wrap" id="experiencias">
-      <div class="section-kicker">{{ copy().introKicker }}</div>
-      <div class="intro-content">
-        <h2>{{ copy().introTitle }}<br /><em>{{ copy().introAccent }}</em></h2>
-        <div class="intro-text">
-          <p>{{ copy().introDescription }}</p>
-          <a class="text-link" href="#contacto">{{ copy().introLink }} <span>↗</span></a>
+    <section class="intro-section" id="experiencias" aria-labelledby="intro-title">
+      <div class="section-wrap">
+        <div class="section-kicker">{{ copy().introKicker }}</div>
+        <div class="intro-content">
+          <h2 id="intro-title">
+            {{ copy().introTitle }}<br /><em>{{ copy().introAccent }}</em>
+          </h2>
+          <div class="intro-text">
+            <p>{{ copy().introDescription }}</p>
+            <a class="text-link" href="#identidad"
+              >{{ copy().introLink }} <span aria-hidden="true">↗</span></a
+            >
+          </div>
+        </div>
+        <div class="stat-row">
+          <a href="#archivo"
+            ><strong>{{ photoCount }}</strong
+            ><span>{{ copy().photoStat }}</span
+            ><b aria-hidden="true">↗</b></a
+          ><a href="#recap"
+            ><strong>01</strong><span>{{ copy().recapStat }}</span
+            ><b aria-hidden="true">↗</b></a
+          ><a href="#identidad"
+            ><strong>01</strong><span>{{ copy().logoStat }}</span
+            ><b aria-hidden="true">↗</b></a
+          >
         </div>
       </div>
-      <div class="stat-row">
-        @for (stat of copy().stats; track $index; let index = $index) {
-          <div><strong>{{ index === 1 ? '∞' : index === 2 ? '24/7' : '01' }}</strong><span>{{ stat.split('|')[0] }}<br />{{ stat.split('|')[1] }}</span></div>
-        }
-      </div>
     </section>
-
-    <section class="events-section section-wrap" id="eventos">
+    <section class="film-section section-wrap" id="recap" aria-labelledby="film-title">
       <div class="section-heading">
         <div>
-          <div class="section-kicker">{{ copy().agendaKicker }}</div>
-          <h2>{{ copy().agendaTitle }} <em>{{ copy().agendaAccent }}</em></h2>
+          <div class="section-kicker">{{ copy().filmKicker }}</div>
+          <h2 id="film-title">
+            {{ copy().filmTitle }} <em>{{ copy().filmAccent }}</em>
+          </h2>
         </div>
-          <div class="filter-tabs" role="tablist" [attr.aria-label]="language() === 'es' ? 'Filtrar eventos' : 'Filter events'">
-          <button type="button" [class.active]="eventFilter() === 'upcoming'" (click)="setFilter('upcoming')">{{ copy().upcomingFilter }}</button>
-          <button type="button" [class.active]="eventFilter() === 'past'" (click)="setFilter('past')">{{ copy().pastFilter }}</button>
-        </div>
+        <p>{{ copy().filmDescription }}</p>
       </div>
-
-      @if (eventFilter() === 'upcoming') {
-        <div class="event-grid">
-          @for (event of upcomingEvents; track event.title) {
-            <article class="event-card" [class.featured]="$first">
-              <div class="event-image" [style.background-image]="'linear-gradient(135deg, rgba(201,149,50,.34), rgba(17,16,15,.84)), url(' + event.image + ')'">
-                <span class="event-status">{{ copy().upcomingTag }}</span>
-                <span class="event-number">0{{ $index + 1 }}</span>
-              </div>
-              <div class="event-info">
-                <div class="event-date"><strong>{{ event.day }}</strong><span>{{ event.month }}<br />{{ event.year }}</span></div>
-                <div class="event-copy"><h3>{{ event.title }}</h3><p>{{ language() === 'es' ? event.location : event.locationEn }}</p></div>
-                <a class="round-arrow" href="#contacto" [attr.aria-label]="copy().infoAria + ' ' + event.title">↗</a>
-              </div>
-            </article>
-          }
-        </div>
-      } @else {
-        <div class="event-grid">
-          @for (event of pastEvents; track event.title) {
-            <article class="event-card">
-              <div class="event-image" [style.background-image]="'linear-gradient(135deg, rgba(201,149,50,.34), rgba(17,16,15,.84)), url(' + event.image + ')'">
-                <span class="event-status past-status">{{ copy().pastTag }}</span>
-                <span class="event-number">0{{ $index + 1 }}</span>
-              </div>
-              <div class="event-info">
-                <div class="event-date"><strong>{{ event.day }}</strong><span>{{ event.month }}<br />{{ event.year }}</span></div>
-                <div class="event-copy"><h3>{{ event.title }}</h3><p>{{ language() === 'es' ? event.location : event.locationEn }}</p></div>
-                <a class="round-arrow" href="#archivo" [attr.aria-label]="'Ver archivo de ' + event.title">↗</a>
-              </div>
-            </article>
-          }
-        </div>
-      }
-    </section>
-
-    <section class="archive-section" id="archivo">
-      <div class="section-wrap archive-inner">
-        <div class="archive-copy">
-          <div class="section-kicker">{{ copy().archiveKicker }}</div>
-          <h2>{{ copy().archiveTitle }}<br /><em>{{ copy().archiveAccent }}</em></h2>
-          <p>{{ copy().archiveDescription }}</p>
-          <a class="button button-light" href="#contacto">{{ copy().gallery }} <span>↗</span></a>
-        </div>
-        <div class="archive-collage" aria-label="Galería de eventos pasados">
-          <div class="collage-image collage-main" [style.background-image]="'linear-gradient(135deg, rgba(17,16,15,.22), rgba(201,149,50,.3)), url(' + pastEvents[0].image + ')'" aria-hidden="true"></div>
-          <div class="collage-image collage-top" [style.background-image]="'linear-gradient(135deg, rgba(17,16,15,.22), rgba(201,149,50,.3)), url(' + pastEvents[1].image + ')'" aria-hidden="true"></div>
-          <div class="collage-image collage-bottom" [style.background-image]="'linear-gradient(135deg, rgba(17,16,15,.22), rgba(201,149,50,.3)), url(' + pastEvents[2].image + ')'" aria-hidden="true"></div>
-          <span class="collage-note">GM / MEMORIES</span>
-        </div>
+      <button
+        class="recap-cover"
+        type="button"
+        (click)="openFilm('recap')"
+        [attr.aria-label]="copy().filmPlay"
+      >
+        <img [src]="videos.recap.poster" alt="" width="1440" height="1080" loading="lazy" /><span
+          class="recap-cover-shade"
+        ></span
+        ><span class="film-topline"
+          ><span>GM MUSIC / LIVE RECAP</span
+          ><span>00:32 <span aria-hidden="true">↗</span></span></span
+        ><span class="play-disc" aria-hidden="true">▶</span
+        ><span class="film-bottomline"
+          ><span
+            ><small>{{ copy().eventDate }}</small
+            ><strong>Alliant Energy</strong></span
+          ><span class="film-watch"
+            >{{ copy().filmPlay }} <span aria-hidden="true">↗</span></span
+          ></span
+        >
+      </button>
+      <div class="event-notes" id="eventos">
+        <article>
+          <span class="section-kicker">{{ copy().eventLabel }}</span>
+          <h3>{{ copy().eventTitle }} <span aria-hidden="true">↗</span></h3>
+          <p>{{ copy().eventDescription }}</p>
+          <a class="text-link" href="#archivo"
+            >{{ copy().allPhotos }} <span aria-hidden="true">↓</span></a
+          >
+        </article>
+        <article class="upcoming-note">
+          <span class="section-kicker"><span class="status-dot"></span>{{ copy().upcoming }}</span>
+          <h3>{{ copy().upcomingTitle }}</h3>
+          <p>{{ copy().upcomingDescription }}</p>
+          <a
+            class="text-link"
+            href="https://www.facebook.com/share/1E3cZypEcX/"
+            target="_blank"
+            rel="noopener noreferrer"
+            >{{ copy().follow }} <span aria-hidden="true">↗</span></a
+          >
+        </article>
       </div>
     </section>
-
-    <section class="contact-section section-wrap" id="contacto">
-      <div class="section-kicker">{{ copy().contactKicker }}</div>
-      <div class="contact-content">
-        <div>
-          <h2>{{ copy().contactTitle }}<br /><em>{{ copy().contactAccent }}</em></h2>
-          <p>{{ copy().contactDescription }}</p>
+    <section class="gallery-section" id="archivo" aria-labelledby="gallery-title">
+      <div class="section-wrap">
+        <div class="section-heading gallery-heading">
+          <div>
+            <div class="section-kicker">{{ copy().galleryKicker }}</div>
+            <h2 id="gallery-title">
+              {{ copy().galleryTitle }}<br /><em>{{ copy().galleryAccent }}</em>
+            </h2>
+          </div>
+          <div class="gallery-intro">
+            <span class="collection-count"
+              >{{ photoCount }} <span>{{ copy().photos }}</span></span
+            >
+            <p>{{ copy().galleryDescription }}</p>
+          </div>
         </div>
-        <div class="contact-actions">
-          <a class="contact-link" href="https://www.facebook.com/share/1E3cZypEcX/" target="_blank" rel="noopener"><span>f</span> Facebook <b>↗</b></a>
-          <a class="contact-link" href="#contacto"><span>◎</span> Instagram <small>{{ copy().comingSoon }}</small></a>
-          <a class="contact-link" href="#contacto"><span>◌</span> WhatsApp <small>{{ copy().comingSoon }}</small></a>
+        <div class="gallery-toolbar">
+          <div class="filter-tabs" role="group" [attr.aria-label]="copy().filter">
+            @for (category of categories; track category.id) {
+              <button
+                type="button"
+                [class.active]="galleryFilter() === category.id"
+                [attr.aria-pressed]="galleryFilter() === category.id"
+                (click)="setGalleryFilter(category.id)"
+              >
+                {{ categoryName(category.id) }} <span>{{ categoryCount(category.id) }}</span>
+              </button>
+            }
+          </div>
+          <span class="collection-label">ALLIANT ENERGY / NOV 07</span>
+        </div>
+        <div class="gallery-grid" id="photo-grid">
+          @for (photo of visiblePhotos(); track photo.id; let index = $index) {
+            <button
+              class="photo-card"
+              type="button"
+              (click)="openPhoto(photo)"
+              [attr.aria-label]="copy().openPhoto + ': ' + caption(photo)"
+            >
+              <span class="photo-image"
+                ><img
+                  [src]="photo.thumbnail"
+                  [alt]="caption(photo)"
+                  [width]="photo.width"
+                  [height]="photo.height"
+                  loading="lazy"
+                  decoding="async"
+                /><span class="photo-overlay"
+                  ><span>{{ categoryName(photo.category) }}</span
+                  ><b aria-hidden="true">↗</b></span
+                ></span
+              ><span class="photo-info"
+                ><span>{{ categoryName(photo.category) }}</span
+                ><span
+                  >{{ (index + 1).toString().padStart(2, '0') }} /
+                  {{ filteredPhotos().length.toString().padStart(2, '0') }}</span
+                ></span
+              >
+            </button>
+          } @empty {
+            <p>{{ copy().noPhotos }}</p>
+          }
+        </div>
+        <div class="gallery-bottom">
+          <span aria-live="polite" aria-atomic="true"
+            >{{ copy().showing }} {{ visiblePhotos().length }} {{ copy().of }}
+            {{ filteredPhotos().length }} {{ copy().photos }}</span
+          >
+          @if (visiblePhotos().length < filteredPhotos().length) {
+            <button
+              class="button button-outline"
+              type="button"
+              (click)="loadMore()"
+              aria-controls="photo-grid"
+            >
+              {{ copy().loadMore }} <span aria-hidden="true">+</span>
+            </button>
+          }
+          <a class="back-top" href="#archivo" [attr.aria-label]="copy().navArchive">↑</a>
+        </div>
+      </div>
+    </section>
+    <section class="identity-section section-wrap" id="identidad" aria-labelledby="identity-title">
+      <div class="identity-copy">
+        <div class="section-kicker">{{ copy().identity }}</div>
+        <h2 id="identity-title">
+          {{ copy().identityTitle }}<br /><em>{{ copy().identityAccent }}</em>
+        </h2>
+        <p>{{ copy().identityDescription }}</p>
+        <button class="text-link" type="button" (click)="openFilm('logo')">
+          {{ copy().identityPlay }} <span aria-hidden="true">↗</span>
+        </button>
+      </div>
+      <button
+        class="identity-screen"
+        type="button"
+        (click)="openFilm('logo')"
+        [attr.aria-label]="copy().identityPlay"
+      >
+        <img
+          [src]="videos.logo.poster"
+          alt="GM Music"
+          width="1280"
+          height="720"
+          loading="lazy"
+        /><span class="identity-screen-label"
+          >GM MUSIC / BRAND FILM<span class="mini-play" aria-hidden="true">▶</span></span
+        >
+      </button>
+    </section>
+    <section class="contact-section" id="contacto" aria-labelledby="contact-title">
+      <div class="section-wrap">
+        <div class="section-kicker">{{ copy().contactKicker }}</div>
+        <div class="contact-content">
+          <div>
+            <h2 id="contact-title">
+              {{ copy().contactTitle }}<br /><em>{{ copy().contactAccent }}</em>
+            </h2>
+            <p>{{ copy().contactDescription }}</p>
+          </div>
+          <a
+            class="contact-link"
+            href="https://www.facebook.com/share/1E3cZypEcX/"
+            target="_blank"
+            rel="noopener noreferrer"
+            ><span class="facebook-mark" aria-hidden="true">f</span
+            ><span>{{ copy().contactAction }}<small>Facebook / GM Music</small></span
+            ><b aria-hidden="true">↗</b></a
+          >
         </div>
       </div>
     </section>
   </main>
-
   <footer class="site-footer">
-    <a class="brand footer-brand" href="#inicio"><img src="/logo-gm-music.png" alt="GM Music" /></a>
-    <span>© {{ currentYear }} GM Music</span>
-    <span>{{ copy().footerLine }}</span>
+    <a class="brand footer-brand" href="#inicio" aria-label="GM Music"
+      ><img src="/media/brand/logo.webp" alt="GM Music" width="80" height="80" loading="lazy" /></a
+    ><span>© {{ currentYear }} GM Music</span><span>{{ copy().footerLine }}</span>
   </footer>
-
-  @if (languagePromptOpen()) {
-    <div class="language-backdrop">
-      <div class="language-modal" role="dialog" aria-modal="true" aria-labelledby="language-title">
-        <div class="language-logo">GM</div>
-        <p class="language-overline">WELCOME / BIENVENIDO</p>
-        <h2 id="language-title">Elige tu idioma<br /><em>Choose your language</em></h2>
-        <p class="language-description">Selecciona cómo quieres explorar la experiencia GM Music.</p>
-        <div class="language-options">
-          <button type="button" (click)="chooseLanguage('es')"><span>ES</span> Español <b>↗</b></button>
-          <button type="button" (click)="chooseLanguage('en')"><span>EN</span> English <b>↗</b></button>
-        </div>
-      </div>
-    </div>
-  }
 </div>
+<dialog
+  #photoDialog
+  class="media-dialog photo-dialog"
+  (close)="clearPhoto()"
+  (click)="closeOnBackdrop($event, 'photo')"
+  aria-labelledby="photo-caption"
+>
+  <div class="lightbox-content">
+    <button
+      class="dialog-close"
+      type="button"
+      (click)="closePhoto()"
+      [attr.aria-label]="copy().close"
+      autofocus
+    >
+      ×
+    </button>
+    @if (selectedPhoto(); as photo) {
+      <div class="lightbox-stage">
+        <button
+          class="photo-arrow previous"
+          type="button"
+          (click)="stepPhoto(-1)"
+          [attr.aria-label]="copy().previous"
+        >
+          ←</button
+        ><img
+          [src]="photo.src"
+          [alt]="caption(photo)"
+          [width]="photo.width"
+          [height]="photo.height"
+        /><button
+          class="photo-arrow next"
+          type="button"
+          (click)="stepPhoto(1)"
+          [attr.aria-label]="copy().next"
+        >
+          →
+        </button>
+      </div>
+      <div class="lightbox-caption">
+        <div>
+          <span class="section-kicker">{{ categoryName(photo.category) }} / Alliant Energy</span>
+          <p id="photo-caption">{{ caption(photo) }}</p>
+        </div>
+        <span aria-live="polite">{{ photoPosition() }} / {{ filteredPhotos().length }}</span>
+      </div>
+      <p class="keyboard-hint">{{ copy().keyboard }}</p>
+    }
+  </div>
+</dialog>
+<dialog
+  #filmDialog
+  class="media-dialog film-dialog"
+  (close)="clearFilm()"
+  (click)="closeOnBackdrop($event, 'film')"
+  aria-labelledby="film-dialog-title"
+>
+  <div class="film-dialog-content">
+    <div class="film-dialog-header">
+      <div>
+        <span class="section-kicker">GM MUSIC / FILM</span>
+        <h2 id="film-dialog-title">
+          {{
+            selectedFilm() === 'logo' ? copy().logoTitle : 'Alliant Energy / ' + copy().eventDate
+          }}
+        </h2>
+      </div>
+      <button
+        class="dialog-close"
+        type="button"
+        (click)="closeFilm()"
+        [attr.aria-label]="copy().close"
+        autofocus
+      >
+        ×
+      </button>
+    </div>
+    @if (activeFilm(); as film) {
+      <video
+        [src]="film.src"
+        [poster]="film.poster"
+        controls
+        autoplay
+        playsinline
+        preload="metadata"
+        [attr.aria-label]="selectedFilm() === 'logo' ? copy().logoTitle : copy().filmPlay"
+      ></video>
+    }
+    <p class="film-notice">{{ copy().sound }}</p>
+  </div>
+</dialog>
+<dialog
+  #welcomeDialog
+  class="language-modal"
+  aria-labelledby="language-title"
+  (cancel)="chooseLanguage(language())"
+  (close)="languagePromptOpen.set(false)"
+>
+  <div class="language-modal-inner">
+    <img class="language-logo" src="/media/brand/logo.webp" alt="GM Music" width="90" height="90" />
+    <p class="language-overline">WELCOME / BIENVENIDO</p>
+    <h2 id="language-title">Elige tu idioma<br /><em>Choose your language</em></h2>
+    <p class="language-description">La música nos conecta.<br />Music brings us together.</p>
+    <div class="language-options">
+      <button type="button" (click)="chooseLanguage('es')" autofocus>
+        <span>ES</span>Español<b aria-hidden="true">↗</b></button
+      ><button type="button" (click)="chooseLanguage('en')">
+        <span>EN</span>English<b aria-hidden="true">↗</b>
+      </button>
+    </div>
+  </div>
+</dialog>
